@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.faqrobot.textrecyclerview.ui.act.PhotoViewActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_photoact"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#000000"
+        android:elevation="0dp"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/loadtextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="数据加载中..." />
+
+        <org.faqrobot.textrecyclerview.view.HackyViewPager
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:id="@+id/viewpager"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
+</LinearLayout>
