@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SwipeBackLayout">
+        <attr name="edge_size" format="dimension" />
+        <attr name="edge_flag">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="bottom" value="2" />
+            <enum name="all" value="3" />
+        </attr>
+        <attr name="shadow_left" format="reference" />
+        <attr name="shadow_right" format="reference" />
+        <attr name="shadow_bottom" format="reference" />
+    </declare-styleable>
+
+    <attr name="SwipeBackLayoutStyle" format="reference" />
+
+    <declare-styleable name="DiaryBaseView">
+        <attr name="src" format="reference" />            <!-- 用于缩放旋转的图标 -->
+        <attr name="editable" format="boolean" />          <!-- 是否处于可编辑状态 -->
+        <attr name="frameColor" format="color" />         <!-- 边框颜色 -->
+        <attr name="frameWidth" format="dimension" />     <!-- 边框线宽度 -->
+        <attr name="framePadding" format="dimension" />   <!-- 边框与图片的间距 -->
+        <attr name="degree" format="float" />             <!-- 旋转角度 -->
+        <attr name="scale" format="float" />              <!-- 缩放比例 -->
+        <attr name="controlDrawable" format="reference" /> <!-- 控制图标 -->
+        <attr name="controlLocation">                     <!-- 控制图标的位置 -->
+            <enum name="left_top" value="0" />
+            <enum name="right_top" value="1" />
+            <enum name="right_bottom" value="2" />
+            <enum name="left_bottom" value="3" />
+        </attr>
+        <attr name="delDrawable" format="reference" /> <!-- 删除图标 -->
+        <attr name="delLocation">                     <!-- 删除图标的位置 -->
+            <enum name="left_top" value="0" />
+            <enum name="right_top" value="1" />
+            <enum name="right_bottom" value="2" />
+            <enum name="left_bottom" value="3" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="LoadingView">
+        <attr name="bGradient" format="boolean" />
+        <attr name="circleColor" format="color" />
+        <attr name="circleWidth" format="dimension" />
+        <attr name="radius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="IndentifyingCode">
+        <attr name="codeCount" format="integer|reference"></attr>
+        <attr name="textSize" format="dimension"></attr>
+    </declare-styleable>
+
+
+    <!-- LoadingView -->
+    <attr name="gLoadingStyle" format="reference" />
+    <declare-styleable name="Loading">
+        <attr name="gBackgroundLineSize" format="dimension" />
+        <attr name="gForegroundLineSize" format="dimension" />
+        <attr name="gBackgroundColor" format="reference|color" />
+        <attr name="gForegroundColor" format="reference|color" />
+        <attr name="gLineStyle">
+            <enum name="circle" value="1" />
+            <enum name="line" value="2" />
+        </attr>
+        <attr name="gAutoRun" format="boolean" />
+        <attr name="gProgressFloat" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="ExpandableTextViewAttr">
+        <!-- 允许显示最大行数 -->
+        <attr name="maxExpandLines" format="integer"></attr>
+        <!-- 动画执行时间 -->
+        <attr name="duration" format="integer"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="SlantedTextView">
+        <attr name="slantedTextSize" format="dimension"/>
+        <attr name="slantedBackgroundColor" format="color"/>
+        <attr name="slantedText" format="string"/>
+        <attr name="slantedTextColor" format="color"/>
+        <attr name="slantedLength" format="dimension"/>
+        <attr name="slantedMode" format="enum">
+            <enum name="left" value="0"></enum>
+            <enum name="right" value="1"></enum>
+            <enum name="left_bottom" value="2"></enum>
+            <enum name="right_bottom" value="3"></enum>
+            <enum name="left_triangle" value="4"></enum>
+            <enum name="right_triangle" value="5"></enum>
+            <enum name="left_bottom_triangle" value="6"></enum>
+            <enum name="right_bottom_triangle" value="7"></enum>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="PxBlurringView">
+        <attr name="blurRadius" format="integer"/>
+        <attr name="downsampleFactor" format="integer"/>
+        <attr name="overlayColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="CaterpillarIndicator">
+        <attr name="slide_text_color" format="color|reference" />
+        <attr name="slide_text_size_normal" format="dimension" />
+        <attr name="slide_text_size_selected" format="dimension" />
+        <attr name="slide_text_color_normal" format="color" />
+        <attr name="slide_text_color_selected" format="color" />
+        <attr name="slide_footer_line_height" format="dimension" />
+        <attr name="slide_footer_color" format="color" />
+        <attr name="slide_round" format="boolean" />
+        <attr name="slide_item_width" format="dimension" />
+        <attr name="slide_caterpillar" format="boolean" />
+        <attr name="slide_count" format="integer" />
+        <attr name="slide_padding_bottom" format="dimension" />
+        <attr name="slide_text_center_flag">
+            <enum name="textCenter" value="0" />
+            <enum name="lineCenter" value="1" />
+        </attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="RatioImageView">
+        <attr name="ratio" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="NineGridLayout">
+        <attr name="sapcing" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="pickerview">
+        <attr name="pickerview_gravity">
+            <enum name="center" value="17"/>
+            <enum name="left" value="3"/>
+            <enum name="right" value="5"/>
+        </attr>
+        <attr name="pickerview_textSize" format="dimension"/>
+        <attr name="pickerview_textColorOut" format="color"/>
+        <attr name="pickerview_textColorCenter" format="color"/>
+        <attr name="pickerview_dividerColor" format="color"/>
+        <attr name="pickerview_lineSpacingMultiplier" format="float"/>
+    </declare-styleable>
+    <!--圆角+方角ImageView-->
+    <declare-styleable name="RoundRectImageView">
+        <!--圆角的方向-->
+        <attr name="round_direction">
+            <enum name="top" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="bottom" value="2"/>
+            <enum name="left" value="3"/>
+        </attr>
+        <!--全部圆角-->
+        <attr name="all_round" format="boolean"/>
+        <!--圆角角度-->
+        <attr name="round_size" format="float"/>
+        <attr name="round_small_size" format="float"/>
+        <attr name="round_large_size" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="SlideLayout">
+        <attr name="slideDirection">
+            <enum name="fromRight" value="0"/>
+            <enum name="fromLeft" value="1"/>
+            <enum name="fromTop" value="2"/>
+            <enum name="fromBottom" value="3"/>
+        </attr>
+
+        <attr name="slideCriticalValue" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="SwipeMenuLayout">
+        <attr name="swipeEnable" format="boolean"/>
+        <attr name="ios" format="boolean"/>
+        <attr name="leftSwipe" format="boolean"/>
+    </declare-styleable>
+</resources>
+

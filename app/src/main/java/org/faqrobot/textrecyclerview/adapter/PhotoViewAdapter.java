@@ -47,21 +47,21 @@ public class PhotoViewAdapter extends PagerAdapter {
         //内部布局解析
         View view = View.inflate(container.getContext(), R.layout.item_singleimg, null);
         PhotoView photoView = (PhotoView) view.findViewById(R.id.photoview_singleimg);
-        Glide.with(container.getContext()).load(imgUrls.get(position))
-                .skipMemoryCache(true) // 不用内存缓存
-                .diskCacheStrategy(DiskCacheStrategy.NONE) // 不用磁盘缓存
-                .into(photoView);
-//        Glide.with(container.getContext())
-//                .load(imgUrls.get(position))
-////                .centerCrop()
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-////                .placeholder(R.mipmap.ic_launcher)
-//                .into(photoView)
-//                .getSize((width, height) -> {
-//                    if (!view.isShown()) {
-//                        view.setVisibility(View.VISIBLE);
-//                    }
-//                });
+//        Glide.with(container.getContext()).load(imgUrls.get(position))
+//                .skipMemoryCache(true) // 不用内存缓存
+//                .diskCacheStrategy(DiskCacheStrategy.NONE) // 不用磁盘缓存
+//                .into(photoView);
+        Glide.with(container.getContext())
+                .load(imgUrls.get(position))
+//                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .placeholder(R.mipmap.ic_launcher)
+                .into(photoView)
+                .getSize((width, height) -> {
+                    if (!view.isShown()) {
+                        view.setVisibility(View.VISIBLE);
+                    }
+                });
         container.addView(view);
         return view;
     }
