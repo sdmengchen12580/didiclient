@@ -3,10 +3,6 @@ package org.faqrobot.textrecyclerview.callback;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
-import org.faqrobot.textrecyclerview.R;
-import org.faqrobot.textrecyclerview.ui.fra.SinglePhotoViewFragment;
-
 import java.util.List;
 
 /**
@@ -15,9 +11,9 @@ import java.util.List;
 
 public class FraPagerAdapter extends FragmentPagerAdapter {
 
-    private List<SinglePhotoViewFragment> list;
+    private List<Fragment> list;
 
-    public FraPagerAdapter(FragmentManager fm,List<SinglePhotoViewFragment> list) {
+    public FraPagerAdapter(FragmentManager fm,List<Fragment> list) {
         super(fm);
         this.list = list;
     }
@@ -29,7 +25,7 @@ public class FraPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+        return list != null ? list.size() : 0;
     }
 }
 

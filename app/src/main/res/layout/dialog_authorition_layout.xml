@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/mode_authorition_dialog"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:padding="12dp"
+        android:text="授权"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        >
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:visibility="gone"
+            android:id="@+id/load_animal"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            app:indicator="BallClipRotateMultiple"
+            app:indicator_color="#000000" />
+
+        <TextView
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/tv_authorition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#bfc3c2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/mode_authorition_dialog_textleft"
+            android:gravity="center"
+            android:text=""
+            android:textColor="#6c6e6e"
+            android:textSize="23dp" />
+
+
+        <TextView
+            android:id="@+id/jiezhebofang"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/mode_authorition_dialog_textright"
+            android:gravity="center"
+            android:text="关闭授权"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

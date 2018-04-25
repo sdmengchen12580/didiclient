@@ -6,11 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import org.faqrobot.textrecyclerview.R;
-import org.faqrobot.textrecyclerview.utils.UIUtils;
-import org.faqrobot.textrecyclerview.utils.ViewUtil;
-import org.faqrobot.textrecyclerview.utils.WindowUtil;
 import org.faqrobot.textrecyclerview.view.DynamicWave;
 
 /**

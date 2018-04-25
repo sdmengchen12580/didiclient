@@ -1,30 +1,18 @@
 package org.faqrobot.textrecyclerview.ui.act;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import java.util.List;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-
 import org.faqrobot.textrecyclerview.R;
 import org.faqrobot.textrecyclerview.adapter.PhotoViewAdapter;
 import org.faqrobot.textrecyclerview.callback.PagerChangeCallback;
-import org.faqrobot.textrecyclerview.config.MData;
 import org.faqrobot.textrecyclerview.entity.ImgInfoBean;
-import org.faqrobot.textrecyclerview.ui.baseact.RxBaseActivity;
-
-import java.lang.ref.WeakReference;
-import java.util.List;
+import org.faqrobot.textrecyclerview.ui.act.baseact.RxBaseActivity;
 
 public class PhotoViewActivity extends RxBaseActivity {
 
@@ -32,7 +20,6 @@ public class PhotoViewActivity extends RxBaseActivity {
     private Toolbar toolbar;
     private ViewPager viewPager;
     private int currentPosition;
-    private TextView tvCurrentNumber;
     private PhotoViewAdapter photoViewAdapter;
 
     @Override

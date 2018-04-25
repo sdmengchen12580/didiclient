@@ -7,6 +7,14 @@
     android:background="@color/colorPrimary"
     tools:context="org.faqrobot.textrecyclerview.ui.act.FaqrobotActvity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_faqrobotact"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="0dp"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <org.faqrobot.textrecyclerview.view.SpecialGiftSurfaceView
         android:id="@+id/animalsurfaceview"
@@ -14,8 +22,24 @@
         android:layout_height="70dp"
         android:layout_gravity="center" />
 
+
+    <TextView
+        android:id="@+id/tv_webkack"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="true"
+        android:textColor="@color/white"
+        android:layout_marginBottom="100dp"
+        android:text="1231231231231231231231"/>
+
     <org.faqrobot.textrecyclerview.view.DynamicWave
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom" />
+
+
 </FrameLayout>

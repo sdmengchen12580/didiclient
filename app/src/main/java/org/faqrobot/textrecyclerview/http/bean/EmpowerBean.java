@@ -1,4 +1,4 @@
-package org.faqrobot.commonrobot_v2.bean;
+package org.faqrobot.textrecyclerview.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -20,7 +20,7 @@ public class EmpowerBean implements Parcelable {
     public String toString() {
         return "EmpowerBean{" +
                 "status=" + status +
-                ", message='" + message + '\'' +
+                ", gettaskfra_img_clock_nopressed='" + message + '\'' +
                 ", data='" + data + '\'' +
                 ", time='" + time + '\'' +
                 ", tspan=" + tspan +

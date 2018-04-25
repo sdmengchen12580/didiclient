@@ -1,21 +1,19 @@
 package org.faqrobot.textrecyclerview.ui.fra.home;
 
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+
 import org.faqrobot.textrecyclerview.R;
 import org.faqrobot.textrecyclerview.adapter.HomeFra1Adapter;
 import org.faqrobot.textrecyclerview.config.MData;
 import org.faqrobot.textrecyclerview.entity.ImgInfoBean;
-import org.faqrobot.textrecyclerview.ui.basefra.RxBaseFragment;
+import org.faqrobot.textrecyclerview.ui.fra.basefra.RxBaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;

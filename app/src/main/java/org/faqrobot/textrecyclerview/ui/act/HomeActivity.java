@@ -7,20 +7,21 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 
+import org.faqrobot.mylibrary.utils.other.ChangeUi;
+import org.faqrobot.mylibrary.utils.toast.ToastUtils;
 import org.faqrobot.textrecyclerview.R;
 import org.faqrobot.textrecyclerview.callback.BottomClickCallback;
-import org.faqrobot.textrecyclerview.ui.baseact.RxBaseActivity;
+import org.faqrobot.textrecyclerview.ui.act.baseact.RxBaseActivity;
 import org.faqrobot.textrecyclerview.ui.fra.client.ClientFragment;
 import org.faqrobot.textrecyclerview.ui.fra.gettask.GetTaskFragment;
 import org.faqrobot.textrecyclerview.ui.fra.home.HomeFragment;
 import org.faqrobot.textrecyclerview.ui.fra.my.MyFragment;
 import org.faqrobot.textrecyclerview.ui.fra.prividertask.ProviderTaskFragment;
-import org.faqrobot.textrecyclerview.utils.ChangeUi;
-import org.faqrobot.textrecyclerview.utils.ToastUtils;
 
 public class HomeActivity extends RxBaseActivity {
 
@@ -44,6 +45,16 @@ public class HomeActivity extends RxBaseActivity {
     public void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    public void hideToolbar(){
+        toolbar.setVisibility(View.GONE);
+    }
+
+    public void showToolbar(){
+        if(toolbar.getVisibility()==View.GONE){
+            toolbar.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initFragment() {
@@ -83,10 +94,12 @@ public class HomeActivity extends RxBaseActivity {
             public void clickFirst() {
                 //如果0位置，点击0位置时，不会触发此回调
                 replaceFra(0);
+                showToolbar();
             }
 
             @Override
             public void clickTwo() {
+                hideToolbar();
                 replaceFra(1);
             }
 

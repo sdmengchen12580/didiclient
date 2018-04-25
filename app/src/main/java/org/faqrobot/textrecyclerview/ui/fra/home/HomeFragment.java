@@ -8,9 +8,7 @@ import android.view.View;
 import com.flyco.tablayout.SlidingTabLayout;
 import org.faqrobot.textrecyclerview.R;
 import org.faqrobot.textrecyclerview.callback.PagerChangeCallback;
-import org.faqrobot.textrecyclerview.ui.basefra.RxBaseFragment;
-import org.faqrobot.textrecyclerview.utils.ToastUtils;
-
+import org.faqrobot.textrecyclerview.ui.fra.basefra.RxBaseFragment;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

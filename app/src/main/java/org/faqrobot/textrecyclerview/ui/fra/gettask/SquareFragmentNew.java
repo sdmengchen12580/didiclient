@@ -15,10 +15,10 @@ import org.faqrobot.textrecyclerview.R;
 public class SquareFragmentNew extends Fragment {
 
 
-    public SquareFragmentNew() {
-        // Required empty public constructor
+    public static SquareFragmentNew newInstance() {
+        SquareFragmentNew fragment = new SquareFragmentNew();
+        return fragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,8 +1,7 @@
-package com.leku.diary.utils;
+package org.faqrobot.textrecyclerview.utils;
 
 import android.content.Context;
-
-import com.leku.diary.application.DiaryApplication;
+import org.faqrobot.mylibrary.utils.other.AppUtils;
 
 /**
  * Created by User on 2017/2/21.
@@ -14,11 +13,11 @@ public final class DensityUtil {
     }
 
     public static int dip2px(float n) {
-        return dip2px(DiaryApplication.getContext(), n);
+        return dip2px(AppUtils.getAppContext(), n);
     }
 
     public static float dip2px_f(float n) {
-        return (n * DiaryApplication.getContext().getResources().getDisplayMetrics().density + 0.5f);
+        return (n * AppUtils.getAppContext().getResources().getDisplayMetrics().density + 0.5f);
     }
 
     public static int px2dip(final Context context, final float n) {

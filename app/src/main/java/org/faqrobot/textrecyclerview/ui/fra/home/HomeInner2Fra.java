@@ -13,12 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.faqrobot.textrecyclerview.R;
-import org.faqrobot.textrecyclerview.config.MData;
-import org.faqrobot.textrecyclerview.ui.basefra.RxBaseFragment;
+import org.faqrobot.textrecyclerview.ui.fra.basefra.RxBaseFragment;
 import org.faqrobot.textrecyclerview.utils.MyHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.

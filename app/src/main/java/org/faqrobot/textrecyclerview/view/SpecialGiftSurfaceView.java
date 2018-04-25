@@ -5,24 +5,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
-import android.os.Handler;
-import android.os.HandlerThread;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by 孟晨 on 2018/4/16.
@@ -30,227 +23,253 @@ import java.util.List;
 
 public class SpecialGiftSurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 
-    private static final String TAG = "Surface";
-    private static final long INTERVAL_TIME = 66;//最大间隔时间，每帧时间为最大时间减去加载图片消耗的时间。
-    private SurfaceHolder mHolder;
-    private boolean isDrawing = false;
-    private boolean isSurfaceCreated = false;
-    private List<String> mFilePathListRGB = new ArrayList<>();
-    private List<String> mFilePathListAlpha = new ArrayList<>();
-    private HandlerThread handlerThread = new HandlerThread("surfaceview");
-    private RectF mRectF;
-    private OnFrameAnimationListener mListener;
-    private Handler mWorkHandler;
+    private SurfaceHolder mSurfaceHolder;
+
+    private boolean mIsThreadRunning = true; // 线程运行开关
+    public static boolean mIsDestroy = false;// 是否已经销毁
+
+    private int[] mBitmapResourceIds;// 用于播放动画的图片资源id数组
+    private ArrayList<String> mBitmapResourcePaths;// 用于播放动画的图片资源path数组
+    private int totalCount;//资源总数
+    private Canvas mCanvas;
+    private Bitmap mBitmap;// 显示的图片
+
+    private int mCurrentIndext;// 当前动画播放的位置
+    private int mGapTime = 150;// 每帧动画持续存在的时间
+
+    private OnFrameFinishedListener mOnFrameFinishedListener;// 动画监听事件
 
     public SpecialGiftSurfaceView(Context context) {
-        super(context);
-        init();
+        this(context, null);
+        initView();
+    }
+
+    public SpecialGiftSurfaceView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initView();
     }
 
     public SpecialGiftSurfaceView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
+        this(context, attrs, 0);
+        initView();
+
     }
 
-    private void init() {
-        mHolder = getHolder();
-        mHolder.addCallback(this);
-        //设置SurfaceView透明
+    private void initView() {
+        mSurfaceHolder = this.getHolder();
+        mSurfaceHolder.addCallback(this);
+
+        // 白色背景
         setZOrderOnTop(true);
-        mHolder.setFormat(PixelFormat.TRANSLUCENT);
-        handlerThread.start();
-    }
-
-    /**
-     * 开始帧动画
-     *
-     * @param pathListRGB   彩色图片路径
-     * @param pathListAlpha 透明图片路径
-     */
-    public void startAnimation(List<String> pathListRGB, List<String> pathListAlpha) {
-        long delay = 0;
-        if (pathListRGB == null || pathListRGB.size() == 0) {
-            return;
-        }
-        setVisibility(VISIBLE);
-        mFilePathListRGB.clear();
-        mFilePathListRGB.addAll(pathListRGB);
-        mFilePathListAlpha.clear();
-        if (pathListAlpha != null && mFilePathListAlpha.size() > 0) {
-            mFilePathListAlpha.addAll(pathListAlpha);
-        }
-        mWorkHandler = new Handler(handlerThread.getLooper());
-        if (!isSurfaceCreated) {
-            Log.d(TAG, "SurfaceView is not created.wait 1000");
-            delay = 1000;
-        }
-        setLayerType(LAYER_TYPE_HARDWARE, null);
-        mWorkHandler.postDelayed(this, delay);
-    }
-
-    public void startAnimation(List<String> pathListRGB) {
-        startAnimation(pathListRGB, null);
-    }
-
-    /**
-     * 停止动画
-     */
-    public void stopAnimation() {
-        mFilePathListRGB.clear();
-        mFilePathListAlpha.clear();
-        setVisibility(INVISIBLE);
-        setLayerType(LAYER_TYPE_NONE, null);
-        isDrawing = false;
-        if (mWorkHandler != null) {
-            mWorkHandler.removeCallbacks(this);
-        }
-    }
-
-    public void setListener(OnFrameAnimationListener listener) {
-        mListener = listener;
+//        getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        setZOrderMediaOverlay(true);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        isSurfaceCreated = true;
-        isDrawing = true;
-        Log.d(TAG, "surfaceCreated");
+
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        stopAnimation();
+        // 当surfaceView销毁时, 停止线程的运行. 避免surfaceView销毁了线程还在运行而报错.
+//        mIsThreadRunning = false;
+//        try {
+//            Thread.sleep(mGapTime);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        mIsDestroy = true;
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == event.KEYCODE_BACK) {
-            stopAnimation();
+    /**
+     * 制图方法
+     */
+    private void drawView() {
+        // 无资源文件退出
+        if (mBitmapResourceIds == null && mBitmapResourcePaths == null) {
+            Log.e("frameview", "the bitmapsrcIDs is null");
+
+            mIsThreadRunning = false;
+
+            return;
         }
-        return super.onKeyDown(keyCode, event);
+
+        // 锁定画布
+        if (mSurfaceHolder != null) {
+            mCanvas = mSurfaceHolder.lockCanvas();
+        }
+        try {
+            if (mSurfaceHolder != null && mCanvas != null) {
+                //画布白色
+//                mCanvas.drawColor(Color.WHITE);
+
+                //画布透明
+                mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+                if (mBitmapResourceIds != null && mBitmapResourceIds.length > 0)
+                    mBitmap = BitmapFactory.decodeResource(getResources(), mBitmapResourceIds[mCurrentIndext]);
+                else if (mBitmapResourcePaths != null && mBitmapResourcePaths.size() > 0) {
+                    mBitmap = BitmapFactory.decodeFile(mBitmapResourcePaths.get(mCurrentIndext));
+
+                }
+
+                Paint paint = new Paint();
+                paint.setAntiAlias(true);
+                paint.setStyle(Paint.Style.STROKE);
+                Rect mSrcRect, mDestRect;
+                mSrcRect = new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
+                mDestRect = new Rect(0, 0, getWidth(), getHeight());
+                mCanvas.drawBitmap(mBitmap, mSrcRect, mDestRect, paint);
+
+                // 播放到最后一张图片
+                if (mCurrentIndext == totalCount - 1) {
+                    //TODO 设置重复播放
+                    //播放到最后一张，当前index置零
+                    mCurrentIndext = 0;
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            mCurrentIndext++;
+
+            if (mCurrentIndext >= totalCount) {
+                mCurrentIndext = 0;
+            }
+            if (mCanvas != null) {
+                // 将画布解锁并显示在屏幕上
+                if (mSurfaceHolder != null) {
+                    mSurfaceHolder.unlockCanvasAndPost(mCanvas);
+                }
+            }
+
+            if (mBitmap != null) {
+                // 收回图片
+                mBitmap.recycle();
+            }
+        }
     }
 
     @Override
     public void run() {
-        SpecialGiftSurfaceView.this.post(new Runnable() {
-            @Override
-            public void run() {
-                notifyStart();
-            }
-        });
-        for (int i = 0; i < mFilePathListRGB.size(); i++) {
-            if (isDrawing) {
-                try {
-                    long temp = System.currentTimeMillis();
-                    if (mFilePathListAlpha != null && mFilePathListAlpha.size() > 0) {
-                        draw(mFilePathListRGB.get(i), mFilePathListAlpha.get(i));
-                    } else {
-                        draw(mFilePathListRGB.get(i));
-                    }
-                    //间隔幅度越小，CPU占比越大。所以应该合理设置。
-                    long ll = System.currentTimeMillis() - temp;
-                    Log.d(TAG, "id :" + i + "   temp :" + ll);
-                    Thread.sleep(Math.max(0, (INTERVAL_TIME - ll)));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                break;
+        if (mOnFrameFinishedListener != null) {
+            mOnFrameFinishedListener.onStart();
+        }
+
+        // 每隔150ms刷新屏幕
+        while (mIsThreadRunning) {
+            drawView();
+            try {
+                Thread.sleep(mGapTime);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        SpecialGiftSurfaceView.this.post(new Runnable() {
-            @Override
-            public void run() {
-                stopAnimation();
-                notifyFinished();
-            }
-        });
-    }
 
-    private void draw(String path) {
-        Canvas canvas = mHolder.lockCanvas();
-        if (canvas != null) {
-            Bitmap diskBitmap = getDiskBitmap(path);
-            if (diskBitmap != null) {
-                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
-                mRectF = new RectF(SpecialGiftSurfaceView.this.getLeft(),
-                        SpecialGiftSurfaceView.this.getTop(),
-                        SpecialGiftSurfaceView.this.getWidth(),
-                        SpecialGiftSurfaceView.this.getHeight());
-                canvas.drawBitmap(diskBitmap, null, mRectF, null);
-            }
-            mHolder.unlockCanvasAndPost(canvas);
+        if (mOnFrameFinishedListener != null) {
+            mOnFrameFinishedListener.onStop();
         }
     }
 
-    private void draw(String pathRGB, String pathAlpha) {
-        Canvas canvas = mHolder.lockCanvas();
-        if (canvas != null) {
-            int saveCount = canvas.getSaveCount();
-            Paint l = new Paint();
-            l.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-            Paint m = new Paint();
-            m.setColorFilter(new ColorMatrixColorFilter(new ColorMatrix(new float[]{
-                    0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                    0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                    0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                    1.0f, 0.0f, 0.0f, 0.0f, 0.0f})));
-            Bitmap decodeFile = getDiskBitmap(pathRGB);
-            Bitmap decodeFile2 = getDiskBitmap(pathAlpha);
-            if (!(decodeFile == null || decodeFile2 == null)) {
-                Bitmap r = Bitmap.createBitmap(decodeFile.getWidth(), decodeFile.getHeight(), Bitmap.Config.ARGB_8888);
-                Canvas c = new Canvas(r);
-                RectF rectF = new RectF(SpecialGiftSurfaceView.this.getLeft(),
-                        SpecialGiftSurfaceView.this.getTop(),
-                        SpecialGiftSurfaceView.this.getWidth(),
-                        SpecialGiftSurfaceView.this.getHeight());
-
-                c.drawBitmap(decodeFile2, 0.0f, 0.0f, m);
-                c.drawBitmap(decodeFile, 0.0f, 0.0f, l);
-
-                canvas.drawBitmap(r, null, rectF, null);
-                canvas.restoreToCount(saveCount);
+    /**
+     * 开始动画
+     */
+    public void start() {
+        if (!mIsDestroy) {
+            mCurrentIndext = 0;
+            mIsThreadRunning = true;
+            new Thread(this).start();
+        } else {
+            // 如果SurfaceHolder已经销毁抛出该异常
+            try {
+                throw new Exception("IllegalArgumentException:Are you sure the SurfaceHolder is not destroyed");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            mHolder.unlockCanvasAndPost(canvas);
         }
     }
 
-    private Bitmap getDiskBitmap(String pathString) {
-        Bitmap bitmap = null;
-        try {
-            File file = new File(pathString);
-            if (file.exists()) {
-                bitmap = BitmapFactory.decodeFile(pathString);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    /**
+     * 设置动画播放素材的id
+     */
+    public void setBitmapResoursID(int[] bitmapResourceIds) {
+        this.mBitmapResourceIds = bitmapResourceIds;
+        totalCount = bitmapResourceIds.length;
+    }
+
+    /**
+     * 设置动画播放素材的路径
+     */
+    public void setmBitmapResourcePath(ArrayList bitmapResourcePaths) {
+        this.mBitmapResourcePaths = bitmapResourcePaths;
+        totalCount = bitmapResourcePaths.size();
+    }
+
+    /**
+     * 设置每帧时间
+     */
+    public void setGapTime(int gapTime) {
+        this.mGapTime = gapTime;
+    }
+
+    /**
+     * 结束动画
+     */
+    public void stop() {
+        mIsThreadRunning = false;
+    }
+
+    /**
+     * 继续动画
+     */
+    public void reStart() {
+        mIsThreadRunning = false;
+    }
+
+    /**
+     * 设置动画监听器
+     */
+    public void setOnFrameFinisedListener(OnFrameFinishedListener onFrameFinishedListener) {
+        this.mOnFrameFinishedListener = onFrameFinishedListener;
+    }
+
+    /**
+     * 动画监听器
+     *
+     * @author qike
+     */
+    public interface OnFrameFinishedListener {
+
+        /**
+         * 动画开始
+         */
+        void onStart();
+
+        /**
+         * 动画结束
+         */
+        void onStop();
+    }
+
+    /**
+     * 当用户点击返回按钮时，停止线程，反转内存溢出
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 当按返回键时，将线程停止，避免surfaceView销毁了,而线程还在运行而报错
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            mIsThreadRunning = false;
         }
-        return bitmap;
+        return super.onKeyDown(keyCode, event);
     }
 
-    private void notifyStart() {
-        if (mListener != null) {
-            mListener.onFrameAnimationStart();
-        }
-    }
 
-    private void notifyFinished() {
-        if (mListener != null) {
-            mListener.onFrameAnimationFinished();
-        }
-    }
-
-    public interface OnFrameAnimationListener {
-
-        void onFrameAnimationStart();
-
-        void onFrameAnimationFinished();
-
-    }
 }

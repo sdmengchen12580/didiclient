@@ -15,8 +15,9 @@ import org.faqrobot.textrecyclerview.R;
 public class DiscoverFragment extends Fragment {
 
 
-    public DiscoverFragment() {
-        // Required empty public constructor
+    public static DiscoverFragment newInstance() {
+        DiscoverFragment fragment = new DiscoverFragment();
+        return fragment;
     }
 
 

@@ -1,13 +1,66 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.faqrobot.textrecyclerview.ui.fra.gettask.GetTaskFragment">
+    android:background="@color/status_bar_color"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="46dp"
+        android:background="@color/white">
 
-</FrameLayout>
+        <ImageView
+            android:clickable="true"
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:padding="10dp"
+            android:src="@drawable/gettaskfra_img_search_selecter" />
+
+        <org.faqrobot.textrecyclerview.view.CaterpillarIndicator
+            android:id="@+id/caterpillarIndicator"
+            android:layout_width="210dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/white"
+            app:slide_caterpillar="true"
+            app:slide_footer_color="@color/home_tab_colorbar"
+            app:slide_footer_line_height="2dp"
+            app:slide_item_width="22dp"
+            app:slide_padding_bottom="4dp"
+            app:slide_round="true"
+            app:slide_text_center_flag="textCenter"
+            app:slide_text_size_normal="17sp"
+            app:slide_text_size_selected="17sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_message"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="15dp">
+
+            <ImageView
+                android:clickable="true"
+                android:id="@+id/ring"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/gettaskfra_img_clock_selecter" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View style="@style/view_line" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager_gettaskfra"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

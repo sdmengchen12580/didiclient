@@ -8,7 +8,7 @@ import android.graphics.PaintFlagsDrawFilter;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.faqrobot.textrecyclerview.utils.UIUtils;
+import org.faqrobot.mylibrary.utils.windowadapter.UIUtils;
 
 /**
  * Created by 孟晨 on 2018/4/2.

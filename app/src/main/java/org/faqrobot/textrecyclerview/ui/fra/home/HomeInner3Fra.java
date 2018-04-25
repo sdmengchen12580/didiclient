@@ -13,7 +13,7 @@ import android.view.View;
 import org.faqrobot.textrecyclerview.R;
 import org.faqrobot.textrecyclerview.adapter.HomeFra3Adapter;
 import org.faqrobot.textrecyclerview.entity.VideoBean;
-import org.faqrobot.textrecyclerview.ui.basefra.RxBaseFragment;
+import org.faqrobot.textrecyclerview.ui.fra.basefra.RxBaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;

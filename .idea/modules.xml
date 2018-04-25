@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/LRecyclerview_library/LRecyclerview_library.iml" filepath="$PROJECT_DIR$/LRecyclerview_library/LRecyclerview_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/TextRecyclerview.iml" filepath="$PROJECT_DIR$/TextRecyclerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xrecyclerviewlibrary/xrecyclerviewlibrary.iml" filepath="$PROJECT_DIR$/xrecyclerviewlibrary/xrecyclerviewlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/yzslibrary/yzslibrary.iml" filepath="$PROJECT_DIR$/yzslibrary/yzslibrary.iml" />
     </modules>
   </component>

@@ -1,4 +1,4 @@
-package com.leku.diary.widget;
+package org.faqrobot.textrecyclerview.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -18,7 +18,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
-import com.leku.diary.R;
+import org.faqrobot.textrecyclerview.R;
 
 /**
  * Created by zhubing on 2017/10/30.
